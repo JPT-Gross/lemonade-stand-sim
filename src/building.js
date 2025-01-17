@@ -1,20 +1,20 @@
 class Building {
-    constructor(buildingName, baseCps, baseCost, buttonId) {
+    constructor(buildingName, baseCps, baseCost) {
         this.buildingName = buildingName;
         this.baseCps = baseCps / (1000 / tickRate);
         this.baseCost = baseCost;
         this.cost = baseCost;
-        this.buttonId = buttonId;
+        this.buttonId = 'buy' + buildingName;
         this.amountOwned = 0;
         this.cps = 0;
-        this.visible = false; // !!!!Change this to false!!!!!!
+        this.visible = false;
     }
 
     purchase() {
         score -= this.cost;
         this.amountOwned++;
         this.cps = this.baseCps * this.amountOwned;
-        this.cost = Math.ceil(this.cost * 1.15 ** this.amountOwned);
+        this.cost = Math.ceil(this.baseCost * 1.15 ** this.amountOwned);
     }
 
     buttonState() {

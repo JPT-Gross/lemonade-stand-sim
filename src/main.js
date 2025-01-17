@@ -1,8 +1,8 @@
 const tickRate = 1000 / 30; // 30 FPS
 let score = 0;
 
-let juicer = new Building('Juicer', 0.1, 15, 'buyJuicer');
-let sugar = new Building('Sugar', 1, 100, 'buySugar');
+let juicer = new Building('Juicer', 0.1, 15);
+let sugar = new Building('Sugar', 1, 100);
 
 function scorePlusPlus() {
     score++;
