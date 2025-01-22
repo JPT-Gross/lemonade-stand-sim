@@ -4,8 +4,9 @@ class Building {
         this.baseCps = baseCps / (1000 / tickRate);
         this.baseCost = baseCost;
         this.cost = baseCost;
-        this.buttonId = 'buy' + buildingName;
+        this.buttonId = 'buy' + buildingName.replace(/\s/g, '');
         this.amountOwned = 0;
+        this.doubleUpgrade = 1;
         this.cps = 0;
         this.visible = false;
     }
@@ -13,8 +14,12 @@ class Building {
     purchase() {
         score -= this.cost;
         this.amountOwned++;
-        this.cps = this.baseCps * this.amountOwned;
+        this.applyDoubleUpgrade();
         this.cost = Math.ceil(this.baseCost * 1.15 ** this.amountOwned);
+    }
+
+    applyDoubleUpgrade() {
+        this.cps = this.baseCps * this.amountOwned * this.doubleUpgrade;
     }
 
     buttonState() {
