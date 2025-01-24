@@ -44,7 +44,11 @@ class Building {
             ' (Cost: $' +
             Math.ceil(this.cost).toLocaleString() +
             ') <br> Adds $' +
-            (this.baseCps * (1000 / tickRate)).toLocaleString() +
+            (
+                this.baseCps *
+                this.doubleUpgrade *
+                (1000 / tickRate)
+            ).toLocaleString() +
             ' Per Second <br> [Owned: ' +
             this.amountOwned +
             ']';
