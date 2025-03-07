@@ -3,9 +3,22 @@ let clickStrength = 1;
 let score = 0;
 
 let juicer = new Building('Juicer', 0.1, 15);
+createButton(juicer, 'buildingStore');
 let sugar = new Building('Sugar', 1, 100);
+createButton(sugar, 'buildingStore');
 
 let swoleForearms1 = new SwoleArms('Swole Forearms I', 100, juicer);
+createButton(swoleForearms1, 'upgradeStore');
+
+function createButton(object, div) {
+    const button = document.createElement('button');
+    button.id = object.buttonId;
+    button.classList.add('button');
+    button.addEventListener('click', function () {
+        object.purchase();
+    });
+    document.getElementById(div).appendChild(button);
+}
 
 function scorePlusPlus() {
     score += clickStrength;
