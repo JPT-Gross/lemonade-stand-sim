@@ -34,8 +34,8 @@ div.store-title {
 
 div.buildings,
 div.upgrades,
-div.buildingStore,
-div.upgradeStore {
+#buildingStore,
+#upgradeStore {
     display: flex;
     flex-direction: column;
 }
