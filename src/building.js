@@ -1,10 +1,7 @@
-class Building {
-    constructor(buildingName, baseCps, baseCost) {
-        this.buildingName = buildingName;
+class Building extends Product {
+    constructor(name, baseCps, baseCost) {
+        super(name, baseCost);
         this.baseCps = baseCps / (1000 / tickRate);
-        this.baseCost = baseCost;
-        this.cost = baseCost;
-        this.buttonId = 'buy' + buildingName.replace(/\s/g, '');
         this.amountOwned = 0;
         this.doubleUpgrade = 0;
         this.cps = 0;
@@ -12,7 +9,7 @@ class Building {
     }
 
     purchase() {
-        score -= this.cost;
+        super.purchase();
         this.amountOwned++;
         this.applyDoubleUpgrade();
         this.cost = Math.ceil(this.baseCost * 1.15 ** this.amountOwned);
@@ -23,24 +20,11 @@ class Building {
     }
 
     buttonState() {
-        if (!this.visible) {
-            document.getElementById(this.buttonId).style.display = 'none';
-            if (score >= this.baseCost) {
-                this.visible = true;
-                document.getElementById(this.buttonId).style.display =
-                    'initial';
-            }
-        }
-
-        if (score < this.cost) {
-            document.getElementById(this.buttonId).disabled = true;
-        } else {
-            document.getElementById(this.buttonId).disabled = false;
-        }
+        super.buttonState();
 
         document.getElementById(this.buttonId).innerHTML =
             'Buy ' +
-            this.buildingName +
+            this.name +
             ' (Cost: $' +
             Math.ceil(this.cost).toLocaleString() +
             ') <br> Adds $' +
