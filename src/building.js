@@ -3,7 +3,7 @@ class Building extends Product {
         super(name, baseCost);
         this.baseCps = baseCps / (1000 / tickRate);
         this.amountOwned = 0;
-        this.doubleUpgrade = 0;
+        this.doubleUpgrade = 1;
         this.cps = 0;
         this.visible = false;
     }
@@ -16,7 +16,7 @@ class Building extends Product {
     }
 
     applyDoubleUpgrade() {
-        this.cps = this.baseCps * this.amountOwned * (this.doubleUpgrade * 2);
+        this.cps = this.baseCps * this.amountOwned * this.doubleUpgrade;
     }
 
     buttonState() {

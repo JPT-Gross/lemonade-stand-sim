@@ -7,7 +7,7 @@ class SwoleArms extends Upgrade {
     purchase() {
         super.purchase();
         clickStrength++;
-        this.building.doubleUpgrade++;
+        this.building.doubleUpgrade += 2;
         this.building.applyDoubleUpgrade();
     }
 }
