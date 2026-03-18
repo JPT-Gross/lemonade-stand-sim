@@ -11,6 +11,7 @@ class Building extends Product {
     purchase() {
         if (!super.purchase()) return false;
         this.amountOwned++;
+        gameState.buildings[this.name.toLowerCase()] = this.amountOwned;
         this.applyDoubleUpgrade();
         const COST_GROWTH_RATE = 1.15;
         this.cost = Math.ceil(

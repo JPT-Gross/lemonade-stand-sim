@@ -8,6 +8,7 @@ class Upgrade extends Product {
     purchase() {
         if (!super.purchase()) return false;
         this.owned = true;
+        gameState.upgrades[this.name.toLowerCase().replace(/\s/g, '')] = true;
         return true;
     }
 
