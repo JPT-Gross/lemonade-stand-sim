@@ -8,6 +8,9 @@ const gameState = {
         juicer: 0,
         sugar: 0,
     },
+    upgrades: {
+        swoleforearmsi: false,
+    },
 };
 
 let juicer = new Building('Juicer', 0.1, 15);
