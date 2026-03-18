@@ -33,8 +33,8 @@ function clickMoney() {
 }
 
 function automatedMoney() {
-    gameState.money += juicer.cps;
-    gameState.money += sugar.cps;
+    gameState.money += juicer.cps + sugar.cps;
+    gameState.money = Math.max(gameState.money, 0);
 }
 
 function renderButtons() {
@@ -46,7 +46,7 @@ function renderButtons() {
 function renderPage() {
     automatedMoney();
     renderButtons();
-    document.getElementById('score').innerHTML =
+    document.getElementById('money').innerHTML =
         '$' + Math.floor(gameState.money).toLocaleString();
 }
 

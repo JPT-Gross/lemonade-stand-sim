@@ -6,8 +6,9 @@ class Upgrade extends Product {
     }
 
     purchase() {
-        super.purchase();
+        if (!super.purchase()) return false;
         this.owned = true;
+        return true;
     }
 
     buttonState() {

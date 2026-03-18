@@ -9,13 +9,14 @@ class Building extends Product {
     }
 
     purchase() {
-        super.purchase();
+        if (!super.purchase()) return false;
         this.amountOwned++;
         this.applyDoubleUpgrade();
         const COST_GROWTH_RATE = 1.15;
         this.cost = Math.ceil(
             this.baseCost * COST_GROWTH_RATE ** this.amountOwned,
         );
+        return true;
     }
 
     applyDoubleUpgrade() {
