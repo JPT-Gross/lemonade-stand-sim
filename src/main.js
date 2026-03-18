@@ -1,6 +1,14 @@
-const tickRate = 1000 / 30; // 30 FPS
-let clickStrength = 1;
-let score = 0;
+const TICK_RATE = 1000 / 30; // 30 FPS
+const SECOND = 1000;
+
+const gameState = {
+    money: 0,
+    moneyPerClick: 1,
+    buildings: {
+        juicer: 0,
+        sugar: 0,
+    },
+};
 
 let juicer = new Building('Juicer', 0.1, 15);
 createButton(juicer, 'buildingStore');
@@ -20,26 +28,26 @@ function createButton(object, div) {
     document.getElementById(div).appendChild(button);
 }
 
-function scorePlusPlus() {
-    score += clickStrength;
+function clickMoney() {
+    gameState.money += gameState.moneyPerClick;
 }
 
-function incScore() {
-    score += juicer.cps;
-    score += sugar.cps;
+function automatedMoney() {
+    gameState.money += juicer.cps;
+    gameState.money += sugar.cps;
 }
 
-function updateButtons() {
+function renderButtons() {
     juicer.buttonState();
     sugar.buttonState();
     swoleForearms1.buttonState();
 }
 
-function updatePage() {
-    incScore();
-    updateButtons();
+function renderPage() {
+    automatedMoney();
+    renderButtons();
     document.getElementById('score').innerHTML =
-        '$' + Math.floor(score).toLocaleString();
+        '$' + Math.floor(gameState.money).toLocaleString();
 }
 
-setInterval(updatePage, tickRate);
+setInterval(renderPage, TICK_RATE);
