@@ -26,7 +26,7 @@ class Upgrade extends Product {
             document.getElementById(this.id).style.display = 'none';
         }
 
-        document.getElementById(this.id).innerHTML =
+        document.getElementById(this.id).textContent =
             'Buy ' +
             this.name +
             ' (Cost: $' +

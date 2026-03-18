@@ -47,7 +47,7 @@ class Building extends Product {
         const NET_CLICKS_PER_SECOND = (
             CLICKS_PER_SECOND * this.amountOwned
         ).toLocaleString();
-        document.getElementById(this.id).innerHTML =
+        document.getElementById(this.id).textContent =
             'Buy ' +
             this.name +
             ' (Cost: $' +

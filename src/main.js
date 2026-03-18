@@ -64,5 +64,6 @@ function renderPage() {
         '$' + Math.floor(gameState.money).toLocaleString();
 }
 
+renderPage(); // Initial call to render the page
 // Set an interval to call the renderPage function at the defined tick rate
 setInterval(renderPage, TICK_RATE);
