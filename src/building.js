@@ -1,7 +1,7 @@
 class Building extends Product {
     constructor(name, baseCps, baseCost) {
         super(name, baseCost);
-        this.baseCps = baseCps / (1000 / tickRate);
+        this.baseCps = baseCps / (SECOND / TICK_RATE);
         this.amountOwned = 0;
         this.doubleUpgrade = 1;
         this.cps = 0;
@@ -12,7 +12,10 @@ class Building extends Product {
         super.purchase();
         this.amountOwned++;
         this.applyDoubleUpgrade();
-        this.cost = Math.ceil(this.baseCost * 1.15 ** this.amountOwned);
+        const COST_GROWTH_RATE = 1.15;
+        this.cost = Math.ceil(
+            this.baseCost * COST_GROWTH_RATE ** this.amountOwned,
+        );
     }
 
     applyDoubleUpgrade() {
@@ -31,7 +34,7 @@ class Building extends Product {
             (
                 this.baseCps *
                 this.doubleUpgrade *
-                (1000 / tickRate)
+                (SECOND / TICK_RATE)
             ).toLocaleString() +
             ' Per Second <br> [Owned: ' +
             this.amountOwned +
