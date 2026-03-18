@@ -5,9 +5,10 @@ class SwoleArms extends Upgrade {
     }
 
     purchase() {
-        super.purchase();
+        if (!super.purchase()) return false;
         gameState.moneyPerClick++;
-        this.building.doubleUpgrade += 2;
+        this.building.doubleUpgrade += 1;
         this.building.applyDoubleUpgrade();
+        return true;
     }
 }
