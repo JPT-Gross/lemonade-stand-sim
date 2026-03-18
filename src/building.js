@@ -1,13 +1,18 @@
+// Create a Building class that extends the Product class, representing a
+// building that generates money per tick
 class Building extends Product {
-    constructor(name, baseCps, baseCost) {
+    constructor(name, baseClicksPerTick, baseCost) {
         super(name, baseCost);
-        this.baseCps = baseCps / (SECOND / TICK_RATE);
+        this.baseClicksPerTick = baseClicksPerTick / (SECOND / TICK_RATE);
         this.amountOwned = 0;
         this.doubleUpgrade = 1;
-        this.cps = 0;
+        this.clicksPerTick = 0;
         this.visible = false;
     }
 
+    // Override the purchase method to handle buying a building, increasing the
+    // amount owned, updating the game state, applying any double upgrades, and
+    // increasing the cost for the next purchase
     purchase() {
         if (!super.purchase()) return false;
         this.amountOwned++;
@@ -20,25 +25,38 @@ class Building extends Product {
         return true;
     }
 
+    // Method to apply any double upgrades to the building's clicks per tick
     applyDoubleUpgrade() {
-        this.cps = this.baseCps * this.amountOwned * this.doubleUpgrade;
+        this.clicksPerTick =
+            this.baseClicksPerTick * this.amountOwned * this.doubleUpgrade;
     }
 
+    // Override the buttonState method to update the button's display based on
+    // the current game state, including the cost, clicks per second, and amount
+    // owned
     buttonState() {
         super.buttonState();
 
-        document.getElementById(this.buttonId).innerHTML =
+        // Calculate clicks per second for display purposes
+        const CLICKS_PER_SECOND = (
+            this.baseClicksPerTick *
+            this.doubleUpgrade *
+            (SECOND / TICK_RATE)
+        ).toLocaleString();
+
+        const NET_CLICKS_PER_SECOND = (
+            CLICKS_PER_SECOND * this.amountOwned
+        ).toLocaleString();
+        document.getElementById(this.id).innerHTML =
             'Buy ' +
             this.name +
             ' (Cost: $' +
             Math.ceil(this.cost).toLocaleString() +
             ') <br> Adds $' +
-            (
-                this.baseCps *
-                this.doubleUpgrade *
-                (SECOND / TICK_RATE)
-            ).toLocaleString() +
-            ' Per Second <br> [Owned: ' +
+            CLICKS_PER_SECOND +
+            ' Per Second <br> Total CPS: $' +
+            NET_CLICKS_PER_SECOND +
+            ' <br> [Owned: ' +
             this.amountOwned +
             ']';
     }
