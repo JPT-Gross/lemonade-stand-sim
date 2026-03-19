@@ -44,10 +44,14 @@ class Building extends Product {
             (SECOND / TICK_RATE)
         ).toLocaleString();
 
+        // Calculate net clicks per second based on the amount owned
         const NET_CLICKS_PER_SECOND = (
             CLICKS_PER_SECOND * this.amountOwned
         ).toLocaleString();
-        document.getElementById(this.id).textContent =
+
+        // Update the button's inner HTML to show the building's name, cost,
+        // clicks per second, total clicks per second, and amount owned
+        document.getElementById(this.id).innerHTML =
             'Buy ' +
             this.name +
             ' (Cost: $' +
