@@ -1,69 +1,90 @@
-const TICK_RATE = 1000 / 30; // Define a constant for the tick rate (30 times per second)
-const SECOND = 1000; // Define a constant for one second in milliseconds
+const TICK_RATE = 30; // Define a constant for how fast the screen updates
+const SECOND = 1000;  // Define a constant for 1 second in millis
+let score = 70500;        // Create a variable for the score
 
-// Define the initial game state, including money, money per click, buildings
-// owned, and upgrades owned
-const gameState = {
-    money: 0,
-    moneyPerClick: 1,
-    buildings: {
-        juicer: 0,
-        sugar: 0,
-    },
-    upgrades: {
-        swoleForearms1: false,
-    },
-};
+// Create a variable for how many clicks we get from buildings
+let clicksPerTick = 0;
+// Create a variable for how many clicks we get when we click the button
+let clickStrength = 1;
 
-// Create instances of buildings and upgrades, and create buttons for them
-let juicer = new Building('Juicer', 0.1, 15);
+// Create a function for getting points when we click the button
+function scoreGoUp(){
+    score += 1 * clickStrength;
+}
+
+// Instantiate the Buildings
+// TODO: Change these to match your theme
+let juicer = new Building("Juicer", 0.1, 15, 'media/thumbs/juicer.png');
 createButton(juicer, 'buildingStore');
-let sugar = new Building('Sugar', 1, 100);
+let sugar = new Building("Sugar", 1, 100);
 createButton(sugar, 'buildingStore');
-let swoleForearms1 = new SwoleArms('Swole Forearms 1', 100, juicer);
-createButton(swoleForearms1, 'upgradeStore');
+let ice = new Building("Ice", 8, 1100);
+createButton(ice, 'buildingStore');
 
-// Function to create a button for a given object (building or upgrade) and
-// append it to a specified div
-function createButton(object, div) {
+// Instantiate the Upgrades
+// TODO: Change these to match your theme
+let swoleArms1 = new DoubleUpgrade('Swole Arms 1', 100, juicer, true);
+createButton(swoleArms1, 'upgradeStore');
+let swoleArms2 = new DoubleUpgrade('Swole Arms 2', 750, juicer, true);
+createButton(swoleArms2, 'upgradeStore');
+let swoleArms3 = new DoubleUpgrade('Swole Arms 3', 7500, juicer, true);
+createButton(swoleArms3, 'upgradeStore');
+let refinedSugar = new DoubleUpgrade('Refined Sugar', 500, sugar, false);
+createButton(refinedSugar, 'upgradeStore');
+let sugarCubes = new DoubleUpgrade('Sugar Cubes', 5000, sugar, false);
+createButton(sugarCubes, 'upgradeStore');
+let sonicIce = new DoubleUpgrade('Sonic Ice', 11000, ice, false);
+createButton(sonicIce, 'upgradeStore');
+let cooler = new DoubleUpgrade('Cooler', 55000, ice, false);
+createButton(cooler, 'upgradeStore');
+
+// Create a function to update the buttons every tick
+// TODO: Change these to match your theme
+function renderButtons(){
+    juicer.buttonState();
+    sugar.buttonState();
+    ice.buttonState();
+    swoleArms1.buttonState();
+    swoleArms2.buttonState();
+    swoleArms3.buttonState();
+    refinedSugar.buttonState();
+    sugarCubes.buttonState();
+    sonicIce.buttonState();
+    cooler.buttonState();
+}
+
+// Create a function to update the score every tick
+// TODO: Change this to match your theme
+function renderScore(){
+    clicksPerTick = 
+        juicer.clicksPerTick + 
+        sugar.clicksPerTick +
+        ice.clicksPerTick;
+
+    score += clicksPerTick;
+
+    document.getElementById("score").innerHTML = '$' + 
+        Math.floor(score).toLocaleString();
+}
+
+// Create a function to create html buttons automatically
+function createButton(object, div){
     const button = document.createElement('button');
     button.id = object.id;
     button.classList.add('button');
-    button.addEventListener('click', function () {
+    button.addEventListener('pointerdown', function(e){
+        e.preventDefault();
         object.purchase();
     });
     document.getElementById(div).appendChild(button);
 }
 
-// Function to handle clicking the main money button, which increases money by
-// the amount of money per click
-function clickMoney() {
-    gameState.money += gameState.moneyPerClick;
-}
-
-// Function to automate money generation based on the clicks per tick of owned buildings
-function automatedMoney() {
-    gameState.money += juicer.clicksPerTick + sugar.clicksPerTick;
-    // Ensure money doesn't go negative
-    gameState.money = Math.max(gameState.money, 0);
-}
-
-// Function to update the state of all buttons based on the current game state
-function renderButtons() {
-    juicer.buttonState();
-    sugar.buttonState();
-    swoleForearms1.buttonState();
-}
-
-// Function to render the page, including automated money generation, button
-// states, and displaying the current amount of money
-function renderPage() {
-    automatedMoney();
+// Create a function to update the page
+function renderPage(){
     renderButtons();
-    document.getElementById('money').innerHTML =
-        '$' + Math.floor(gameState.money).toLocaleString();
+    renderScore();
 }
 
-renderPage(); // Initial call to render the page
-// Set an interval to call the renderPage function at the defined tick rate
+// Update the page
+renderPage();
 setInterval(renderPage, TICK_RATE);

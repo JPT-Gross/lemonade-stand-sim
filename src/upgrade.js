@@ -1,36 +1,29 @@
-// Class representing an upgrade in the game, which can be purchased once to
-// provide a permanent benefit
+/**
+    * Create a class representing all upgrades in the game. It inherits from
+    * Product. An upgrade can only be purchased once and has a permenant
+    * effect. The button to purchase the upgrade disappears when purchased. 
+**/
+
 class Upgrade extends Product {
-    constructor(name, baseCost) {
-        super(name, baseCost);
-        this.cost = baseCost;
+    constructor(name, baseCost, thumbnail){
+        super(name, baseCost, thumbnail);
         this.owned = false;
     }
 
-    // Override the purchase method to handle buying an upgrade, marking it as
-    // owned and updating the game state accordingly
+    // Create a method to set owned to true when the upgrade is purchased
     purchase() {
         if (!super.purchase()) return false;
         this.owned = true;
-        gameState.upgrades[this.id] = true;
         return true;
     }
 
-    // Override the buttonState method to update the button's display based on
-    // the current game state, including visibility and whether the upgrade has
-    // already been purchased
+    // Create a method to show text on the button and to delete it when it is
+    // purchased
     buttonState() {
         super.buttonState();
 
         if (this.owned) {
-            document.getElementById(this.id).style.display = 'none';
+            document.getElementById(this.id).style.display = 'none'
         }
-
-        document.getElementById(this.id).textContent =
-            'Buy ' +
-            this.name +
-            ' (Cost: $' +
-            Math.ceil(this.cost).toLocaleString() +
-            ')';
     }
 }

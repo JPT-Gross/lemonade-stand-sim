@@ -1,5 +1,5 @@
 body {
-    margin: 0 15% 0 15%;
+    margin: 0 15%;
 }
 
 header {
@@ -33,21 +33,17 @@ div.store-title {
 }
 
 div.buildings,
-div.upgrades,
-#buildingStore,
-#upgradeStore {
+div.upgrades {
     display: flex;
     flex-direction: column;
-}
-
-div.buildings,
-div.upgrades {
     flex: 50%;
     height: 50vh;
 }
 
-div.buildingStore,
-div.upgradeStore {
+#buildingStore,
+#upgradeStore {
+    display: flex;
+    flex-direction: column;
     overflow: auto;
 }
 
@@ -62,6 +58,22 @@ div.buildings {
     font-size: 1.25em;
     cursor: pointer;
     text-align: left;
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    align-items: center;
+    gap: 1rem;
+}
+
+.thumbnail {
+    object-fit: cover;
+    border-radius: 0.25rem;
+    justify-self: center;
+    align-self: center;
+}
+
+.button-text {
+    text-align: left;
+    line-height: 1.35;
 }
 
 .button:disabled:hover {

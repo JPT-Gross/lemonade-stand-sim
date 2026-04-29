@@ -1,52 +1,45 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link
-            rel="shortcut icon"
-            href="media/ico/favicon.ico"
-            type="image/x-icon"
-        />
-        <link rel="stylesheet" href="styles/style.css" />
-        <title>Lemonade Stand Simulator</title>
-    </head>
-    <body>
-        <header>
-            <h1>Lemonade Stand Simulator</h1>
-            <h2>
-                It's a Hot Summer Day in South Florida and You Need Ice Cream
-                Money...
-            </h2>
-        </header>
-
-        <div class="outer">
-            <div class="click">
-                <h3>Money: <span class="score" id="money">0</span></h3>
-
-                <button type="button" onclick="clickMoney()">Squeeze</button>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles/style.css" />
+    <!--TODO: Change the title, h1, h2, h3 and h4s to match your theme-->
+    <title>Lemonade Stand Simulator</title>
+</head>
+<body>
+    <header>
+        <h1>Lemonade Stand Simulator</h1>
+        <h2>
+            It's a Hot Summer Day in South Florida, 
+            and You Need Ice Cream Money...
+        </h2>
+    </header>
+    <div class="outer">
+        <div class="click">
+            <h3>Money:</h3>
+            <p id="score">0</p>
+            <button onclick="scoreGoUp()">Squeeze</button>
+        </div>
+        <div class="store">
+            <div class="buildings">
+                <div class="store-title">
+                    <h4>Buildings</h4>
+                </div>
+                <div id="buildingStore"></div>
             </div>
-
-            <div class="store">
-                <div class="buildings">
-                    <div class="store-title">
-                        <h4>Buildings:</h4>
-                    </div>
-                    <div id="buildingStore"></div>
+            <div class="upgrades">
+                <div class="store-title">
+                    <h4>Upgrades</h4>
                 </div>
-                <div class="upgrades">
-                    <div class="store-title">
-                        <h4>Upgrades:</h4>
-                    </div>
-
-                    <div id="upgradeStore"></div>
-                </div>
+                <div id="upgradeStore"></div>
             </div>
         </div>
-        <script src="src/product.js"></script>
-        <script src="src/building.js"></script>
-        <script src="src/upgrade.js"></script>
-        <script src="src/swoleArms.js"></script>
-        <script src="src/main.js"></script>
-    </body>
+    </div>
+    <script src="src/product.js"></script>
+    <script src="src/building.js"></script>
+    <script src="src/upgrade.js"></script>
+    <script src="src/doubleUpgrade.js"></script>
+    <script src="src/main.js"></script>
+</body>
 </html>

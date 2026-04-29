@@ -1,67 +1,76 @@
-// Create a Building class that extends the Product class, representing a
-// building that generates money per tick
+/**
+    * Create a class that represents buildings. These inherit Product. Buildings
+    * can be purchased and generate income automatically for the player. They
+    * can be purchased multiple times, but their cost increases exponentially
+    * with each purchase. 
+**/
+
 class Building extends Product {
-    constructor(name, baseClicksPerTick, baseCost) {
-        super(name, baseCost);
-        this.baseClicksPerTick = baseClicksPerTick / (SECOND / TICK_RATE);
+    constructor(name, baseClicksPerSecond, baseCost, thumbnail = 'media/thumbs/default_thumb.jpg'){
+        super(name, baseCost, thumbnail);
+        this.baseClicksPerTick = baseClicksPerSecond / (SECOND / TICK_RATE);
         this.amountOwned = 0;
-        this.doubleUpgrade = 1;
         this.clicksPerTick = 0;
         this.visible = false;
+        this.buildingStrength = 1;
     }
 
-    // Override the purchase method to handle buying a building, increasing the
-    // amount owned, updating the game state, applying any double upgrades, and
-    // increasing the cost for the next purchase
+    // Create a method to double the effectiveness when the player buys an
+    // upgrade
+    applyDoubleUpgrade() {
+        this.buildingStrength++;
+        this.clicksPerTick =
+            this.baseClicksPerTick * this.amountOwned * this.buildingStrength;
+    }
+
+    // Create a method for purchasing the builing
     purchase() {
         if (!super.purchase()) return false;
-        this.amountOwned++;
-        gameState.buildings[this.name.toLowerCase()] = this.amountOwned;
-        this.applyDoubleUpgrade();
+        this.amountOwned ++;
+        this.clicksPerTick = 
+            this.baseClicksPerTick * 
+            this.amountOwned *
+            this.buildingStrength;
         const COST_GROWTH_RATE = 1.15;
         this.cost = Math.ceil(
-            this.baseCost * COST_GROWTH_RATE ** this.amountOwned,
+            this.baseCost * COST_GROWTH_RATE ** this.amountOwned
         );
-        return true;
+        return true
     }
 
-    // Method to apply any double upgrades to the building's clicks per tick
-    applyDoubleUpgrade() {
-        this.clicksPerTick =
-            this.baseClicksPerTick * this.amountOwned * this.doubleUpgrade;
-    }
-
-    // Override the buttonState method to update the button's display based on
-    // the current game state, including the cost, clicks per second, and amount
-    // owned
+    // Create a method to show text on the button
     buttonState() {
         super.buttonState();
 
-        // Calculate clicks per second for display purposes
-        const CLICKS_PER_SECOND = (
-            this.baseClicksPerTick *
-            this.doubleUpgrade *
-            (SECOND / TICK_RATE)
-        ).toLocaleString();
+        const CLICKS_PER_SECOND = 
+            this.baseClicksPerTick * 
+                this.buildingStrength *
+                (SECOND / TICK_RATE);
 
-        // Calculate net clicks per second based on the amount owned
-        const NET_CLICKS_PER_SECOND = (
-            CLICKS_PER_SECOND * this.amountOwned
-        ).toLocaleString();
+        const NET_CLICKS_PER_SECOND = 
+            CLICKS_PER_SECOND *
+                this.amountOwned;
 
-        // Update the button's inner HTML to show the building's name, cost,
-        // clicks per second, total clicks per second, and amount owned
-        document.getElementById(this.id).innerHTML =
+        document.getElementById(this.id).innerHTML = 
+            '<img class="thumbnail" src="' +
+            this.thumbnail +
+            '" alt="' +
+            this.name +
+            '">' +
+            '<div class="button-text">' +
             'Buy ' +
             this.name +
             ' (Cost: $' +
             Math.ceil(this.cost).toLocaleString() +
-            ') <br> Adds $' +
-            CLICKS_PER_SECOND +
-            ' Per Second <br> Total CPS: $' +
-            NET_CLICKS_PER_SECOND +
-            ' <br> [Owned: ' +
+            ')' +
+            '<br> [Owned: ' +
             this.amountOwned +
-            ']';
+            ']' +
+            '<br> [Adds $' +
+            CLICKS_PER_SECOND.toLocaleString() +
+            ' Per Second]' + 
+            '<br> [Adding $' +
+            NET_CLICKS_PER_SECOND.toLocaleString() +
+            ' Per Second]</div>';
     }
 }
